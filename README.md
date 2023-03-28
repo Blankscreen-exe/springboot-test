@@ -1,3 +1,6 @@
+# Foreword For Learning SpringBoot
+The following is just the list ofthings that you need to know before going for SpringBoot framework.
+
 # Java Essentials To Know Beforehand
 
 - [ ] **Java Basics:** You should have a good understanding of Java fundamentals such as variables, data types, control structures, object-oriented programming concepts, and exception handling.
