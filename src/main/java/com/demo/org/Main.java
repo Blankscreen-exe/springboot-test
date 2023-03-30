@@ -98,12 +98,12 @@ public class Main {
                 // second element is a list of strings
                 List.of("Apple","Banana","Kiwi","Watermelon"),
                 // third element is a custom object which is basically a string
-                new Address("221-B Baker Street")
+                new Address("221-B", 18, "BakerStreet")
                 );
     }
 
     // record object for custom object to be included in the json package
-    record Address (String address){}
+    record Address (String house, Integer streetNo, String streetName){}
 
     // this is the response that will be returned. the elements inside it will be used to determine the type of the
     // elements to fit into this json packet
