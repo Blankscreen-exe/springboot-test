@@ -36,4 +36,51 @@ public class Main {
     }
     record BaseApiResponse(Integer baseApiResponse){}
 
+
+    // This method is the same as both of the above methods but does not use "record" to return the response of and URL
+    // The ClassApiResponse method have the same syntax and structure as the above methods
+    @GetMapping("/class_api_route")
+    public ClassApiResponse classApiResponse() {
+        return new ClassApiResponse("quelque chose");
+    }
+
+    // instead of using "record", we have created a class here.
+    // this class signifies the data that we are passing as a response
+    class ClassApiResponse {
+        // this private variable is the data which we will pass as a response.
+        private final String classApiResponse;
+
+        // constructor method for this class
+        ClassApiResponse(String classApiResponse) {
+            this.classApiResponse = classApiResponse;
+        }
+
+        // getter method
+        public String getClassApiResponse() {
+            return classApiResponse;
+        }
+
+        // method to convert the data to string
+        @Override
+        public String toString() {
+            return "ClassApiResponse{" +
+                    "classApiResponse='" + classApiResponse + '\'' +
+                    '}';
+        }
+
+        // overrides the method to check equality of two ClassApiResponse objects.
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            ClassApiResponse that = (ClassApiResponse) o;
+            return Objects.equals(classApiResponse, that.classApiResponse);
+        }
+
+        // overrides the method to convert the data to hashcode
+        @Override
+        public int hashCode() {
+            return Objects.hash(classApiResponse);
+        }
+    }
 }
