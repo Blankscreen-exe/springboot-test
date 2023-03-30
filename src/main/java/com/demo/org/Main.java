@@ -16,11 +16,15 @@ public class Main {
         SpringApplication.run(Main.class, args);
     }
 
+    //------------------------------------------------------
+
     // decorators starting with "*Mapping" indicates that these methods will be exposed to the port
     @GetMapping("/")
     public String home() {
         return "<h1>ceci est ma page d'accueil!</h1>";
     }
+
+    //------------------------------------------------------
 
     // This method returns a JSON response. We did this, just by using MyRestResponse as the return type for this method
     @GetMapping("/sample_rest")
@@ -32,6 +36,8 @@ public class Main {
     record MyRestResponse(String sample) {
     }
 
+    //------------------------------------------------------
+
     // This method is the same as above but this time it returns an integer
     @GetMapping("/base_api")
     public BaseApiResponse baseApiResponse() {
@@ -41,6 +47,7 @@ public class Main {
     record BaseApiResponse(Integer baseApiResponse) {
     }
 
+    //------------------------------------------------------
 
     // This method is the same as both of the above methods but does not use "record" to return the response of and URL
     // The ClassApiResponse method have the same syntax and structure as the above methods
@@ -88,6 +95,8 @@ public class Main {
             return Objects.hash(classApiResponse);
         }
     }
+
+    //------------------------------------------------------
 
     // This method is used to return a complete JSON packet as a response
     @GetMapping("/fruitstore_api")
