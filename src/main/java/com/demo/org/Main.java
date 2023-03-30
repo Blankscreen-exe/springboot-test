@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Objects;
 
 @SpringBootApplication
@@ -26,15 +27,19 @@ public class Main {
     public MyRestResponse sample() {
         return new MyRestResponse("ceci est une réponse en REST");
     }
+
     // Then we used this line to introduce the return type mentioned in the above method
-    record MyRestResponse(String sample){}
+    record MyRestResponse(String sample) {
+    }
 
     // This method is the same as above but this time it returns an integer
     @GetMapping("/base_api")
     public BaseApiResponse baseApiResponse() {
         return new BaseApiResponse(42);
     }
-    record BaseApiResponse(Integer baseApiResponse){}
+
+    record BaseApiResponse(Integer baseApiResponse) {
+    }
 
 
     // This method is the same as both of the above methods but does not use "record" to return the response of and URL
@@ -55,7 +60,7 @@ public class Main {
             this.classApiResponse = classApiResponse;
         }
 
-        // getter method
+        // getter method. This is important to export the data from this class otherwise data will not be returned as a response
         public String getClassApiResponse() {
             return classApiResponse;
         }
@@ -82,5 +87,30 @@ public class Main {
         public int hashCode() {
             return Objects.hash(classApiResponse);
         }
+    }
+
+    // This method is used to return a complete JSON packet as a response
+    @GetMapping("/fruitstore_api")
+    public JSONApiResponse jsonApiResponse() {
+        return new JSONApiResponse(
+                // first element is a simple string
+                "Super Fruit Store",
+                // second element is a list of strings
+                List.of("Apple","Banana","Kiwi","Watermelon"),
+                // third element is a custom object which is basically a string
+                new Address("221-B Baker Street")
+                );
+    }
+
+    // record object for custom object to be included in the json package
+    record Address (String address){}
+
+    // this is the response that will be returned. the elements inside it will be used to determine the type of the
+    // elements to fit into this json packet
+    record JSONApiResponse(
+            String jsonApiResponse,
+            List<String> listOfFruits,
+            Address address
+            ) {
     }
 }
