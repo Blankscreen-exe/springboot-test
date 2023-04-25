@@ -5,21 +5,55 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @SpringBootApplication
 @RestController
 public class Main {
     public static void main(String[] args) {
+        // a helpful message for quick access to the base URL
+        System.out.println("http://localhost:3000");
+
         // This runs the main application
         SpringApplication.run(Main.class, args);
     }
 
     //------------------------------------------------------
 
-    // decorators starting with "*Mapping" indicates that these methods will be exposed to the port
+    // DECORATORS:  starting with "*Mapping" indicates that these methods will be exposed to the port
+
+    // This method returns an html page with all the routes available in this API.
+    // It's like a menu where you can select any route of your choice.
     @GetMapping("/")
+    public String apiEndPoints() {
+        // creates a Map object to store all the links
+        Map<String, String> links = new HashMap<>();
+        links.put("Home", "/home");
+        links.put("Sample Rest", "/sample_rest");
+        links.put("Base API", "/base_api");
+        links.put("class-based API Route", "/class_api_route");
+        links.put("FruitStore API", "/fruitstore_api");
+        links.put("class API Route", "/class_api_route");
+
+        // combine all the Map elements into an html unordered list
+        StringBuilder html = new StringBuilder("<ul>\n");
+        for (Map.Entry<String, String> entry : links.entrySet()) {
+            String name = entry.getKey();
+            String url = entry.getValue();
+            html.append("<li><a href=\"" + url + "\">" + name + "</a></li>\n");
+        }
+        html.append("</ul>");
+
+        return html.toString();
+    }
+
+    //------------------------------------------------------
+
+    // This method returns a simple html response
+    @GetMapping("/home")
     public String home() {
         return "<h1>ceci est ma page d'accueil!</h1>";
     }
